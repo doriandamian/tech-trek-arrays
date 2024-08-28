@@ -10,6 +10,12 @@ console.log(mostApparitions(arr));
 console.log(mostSuccessfulAthletics(arr));
 console.log(smallestWithOneMedal(arr));
 console.log(countryWithPopulation(arr));
+console.log(point10(arr));
+console.log(extractRandom(arr));
+console.log(point12(arr));
+console.log(point13(arr));
+console.log(point14(arr));
+console.log(point15(arr));
 
 function participatingCountries(arr) {
   // const arr = getOlympicData();
@@ -83,6 +89,73 @@ function countryWithPopulation(arr) {
   return final;
 }
 
+function point10(arr) {
+  const final = {};
+  arr.forEach((country) => {
+    if (!final[country.Nation[0].toUpperCase()]) {
+      final[country.Nation[0].toUpperCase()] = [];
+    }
+    final[country.Nation[0].toUpperCase()].push(country.Nation);
+  });
+  for (let letter in final) {
+    final[letter].sort();
+  }
+  return final;
+}
+
+function extractRandom(arr) {
+  const rand = arr[Math.floor(Math.random() * arr.length)];
+  return { nation: rand.Nation, population: rand.Population };
+}
+
+function point12(arr) {
+  const final = [];
+  arr.forEach((country) => {
+    if (country.Population > 1000000 && country.WO_Medal > country.SO_Medal) {
+      final.push(country);
+    }
+  });
+  return final;
+}
+
+function point13(arr) {
+  const final = [];
+  let avr = 0;
+  arr.forEach((country) => {
+    avr += country.Medals;
+  });
+  avr /= arr.length;
+  console.log(avr);
+  arr.forEach((country) => {
+    if (country.Population < 5000000 && country.Medals > avr / 2) {
+      final.push(country);
+    }
+  });
+  return final;
+}
+
+function point14(arr) {
+  arr.sort((a, b) => b.First_App - a.First_App);
+  return arr[0];
+}
+
+function point15(arr) {
+  arr.sort((a, b) => a.First_App - b.First_App);
+  let temp = 0;
+  const final = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].Exists === "YES") {
+      if (temp === 0) {
+        temp = arr[i].First_App;
+        final.push(arr[i]);
+      } else {
+        if (temp === arr[i].First_App) final.push(arr[i]);
+        else break;
+      }
+    }
+  }
+  return final;
+}
 
 // --------------------------------------------------------
 // ----------------------- COUNTRY DATA -------------------
